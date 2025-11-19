@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Saleaah | Careers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap");
+      :root {
+        --main-purple: #745ff2;
+        --text-dark: #222;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Cairo", sans-serif;
+        background-color: #fff;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("pattern.png");
+        background-repeat: repeat;
+        background-size: 180px;
+        opacity: 0.08;
+        z-index: -1;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        padding: 60px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .logo {
+        width: 260px;
+        margin-bottom: 30px;
+      }
+      h1 {
+        color: var(--main-purple);
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      h2 {
+        color: var(--main-purple);
+        margin-top: 25px;
+        margin-bottom: 8px;
+      }
+      ul {
+        margin: 0 0 15px 20px;
+      }
+      form {
+        width: 100%;
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      label {
+        font-weight: 600;
+      }
+      input,
+      select {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-family: "Cairo", sans-serif;
+      }
+      button {
+        margin-top: 15px;
+        background: var(--main-purple);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #624cd8;
+      }
+      .footer {
+        text-align: center;
+        padding: 25px 0;
+        font-size: 0.9rem;
+        color: #666;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        margin-top: 60px;
+      }
+      .footer span {
+        color: var(--main-purple);
+        font-weight: 600;
+      }
+      #langToggle {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        background: transparent;
+        border: 1px solid var(--main-purple);
+        color: var(--main-purple);
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="langToggle">العربية 🇸🇦</button>
+
+    <div class="content" id="mainContent">
+      <img src="logo.png" class="logo" alt="Saleaah logo" />
+
+      <h1>Sales Specialist</h1>
+
+      <h2>Key Responsibilities:</h2>
+      <ul>
+        <li>
+          Building and nurturing strong relationships with our current clients.
+        </li>
+        <li>
+          Strategically expanding our clients' network by identifying and
+          securing the best deals.
+        </li>
+        <li>
+          Leading the expansion into new clients aligned with Saleaah's vision.
+        </li>
+        <li>Coordinating the entire order cycle with clients.</li>
+        <li>
+          Collaborating closely with the procurement team to ensure smooth
+          operations.
+        </li>
+        <li>
+          Leading negotiations on prices and other critical terms with clients.
+        </li>
+      </ul>
+
+      <h2>Requirements:</h2>
+      <ul>
+        <li>
+          Bachelor's degree in Marketing, Business Administration, or a related
+          field.
+        </li>
+        <li>1-3 years of experience in customer relations or sales.</li>
+        <li>
+          Strong analytical and problem-solving skills, data-driven
+          decision-making.
+        </li>
+        <li>Excellent communication and interpersonal skills.</li>
+        <li>Exceptional organizational skills and meticulous attention.</li>
+        <li>Experience in the Poultry Industry.</li>
+        <li>Proficiency in MS Excel.</li>
+        <li>Fluency in Arabic and English.</li>
+        <li>Saudi Nationality – Riyadh-based.</li>
+      </ul>
+
+      <form id="jobForm">
+        <label>Name</label>
+        <input type="text" id="name" required />
+
+        <label>Email</label>
+        <input type="email" id="email" required />
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone" required pattern="[0-9]{9,}" />
+
+        <label>Gender</label>
+        <select id="gender" required>
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+
+        <label>Nationality</label>
+        <select id="nationality" required>
+          <option value="">Select</option>
+          <option value="Saudi">Saudi</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <label>Are you based in Riyadh?</label>
+        <select id="riyadh" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Do you have a bachelor's degree?</label>
+        <select id="degree" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Have you worked in the Food & Beverage industry?</label>
+        <select id="fnb" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Have you worked in the Poultry industry?</label>
+        <select id="poultry" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>LinkedIn Profile</label>
+        <input type="url" id="linkedin" required />
+
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+
+    <footer class="footer">
+      © 2025 <span>Saleaah</span> — All rights reserved
+    </footer>
+
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycby948DpqCDqS8DlEQZEwNN3YnA3bIexAq6IFCZsOcODOdc1r8GzCuAtGRJLb9XQIdv5wA/exec";
+
+      const form = document.getElementById("jobForm");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          gender: document.getElementById("gender").value,
+          nationality: document.getElementById("nationality").value,
+          riyadh: document.getElementById("riyadh").value,
+          degree: document.getElementById("degree").value,
+          fnb: document.getElementById("fnb").value,
+          poultry: document.getElementById("poultry").value,
+          linkedin: document.getElementById("linkedin").value,
+        };
+
+        fetch(scriptURL, {
+          method: "POST",
+          body: JSON.stringify(formData),
+        })
+          .then(() =>
+            alert("✅ Application submitted successfully! Thank you.")
+          )
+          .catch(() =>
+            alert(
+              "❌ Error submitting the application. Please check your connection."
+            ));
+        form.reset();
+      });
+
+      const langBtn = document.getElementById("langToggle");
+      const main = document.getElementById("mainContent");
+      let currentLang = "en";
+
+      langBtn.addEventListener("click", () => {
+        if (currentLang === "en") {
+          main.setAttribute("dir", "rtl");
+          langBtn.textContent = "English 🇬🇧";
+          main.querySelector("h1").textContent = "أخصائي مبيعات";
+          document.querySelectorAll("h2")[0].textContent = "المسؤوليات:";
+          document.querySelectorAll("h2")[1].textContent = "المتطلبات:";
+          currentLang = "ar";
+        } else {
+          main.setAttribute("dir", "ltr");
+          langBtn.textContent = "العربية 🇸🇦";
+          main.querySelector("h1").textContent = "Sales Specialist";
+          document.querySelectorAll("h2")[0].textContent =
+            "Key Responsibilities:";
+          document.querySelectorAll("h2")[1].textContent = "Requirements:";
+          currentLang = "en";
+        }
+      });
+    </script>
+  </body>
+</html>
