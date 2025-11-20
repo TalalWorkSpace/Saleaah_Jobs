@@ -114,6 +114,24 @@
         color: #333;
         font-size: 1.1rem;
       }
+      .loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--main-purple);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto 10px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
   </head>
 
@@ -164,7 +182,7 @@
         <li>Saudi Nationality – Riyadh-based.</li>
       </ul>
 
-      <form id="jobForm" enctype="multipart/form-data">
+      <form id="jobForm">
         <label>Name</label>
         <input type="text" id="name" name="name" required />
 
@@ -228,8 +246,13 @@
           required
         />
 
-        <button type="submit">Submit Application</button>
+        <button type="submit" id="submitButton">Submit Application</button>
       </form>
+      
+      <div class="loading" id="loadingIndicator">
+        <div class="loading-spinner"></div>
+        <p>Submitting your application...</p>
+      </div>
     </div>
 
     <div class="endpage" id="endPage">
@@ -242,26 +265,96 @@
     </footer>
 
     <script>
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbz7XpAVmrT8rzKgbLAwfDUKDBJ1GH5ww3GmwdVnJdAT_jo6_MVjZv3n579BVgA-QyC_Hg/exec";
-
+      // تحديث الرابط إلى تطبيق الويب الخاص بك
+      const scriptURL = "https://script.google.com/macros/s/AKfycby-Ez4JnKGZOdJJHauvfhpt0HYlNFFgDtBBQ6LeRQfhriX-1HAxLGRUvx_rgTvIBvxHuw/exec";
+      
       const form = document.getElementById("jobForm");
       const mainContent = document.getElementById("mainContent");
       const endPage = document.getElementById("endPage");
-
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const submitButton = document.getElementById("submitButton");
+      
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
+        
+        // إظهار مؤشر التحميل وتعطيل زر الإرسال
+        submitButton.disabled = true;
+        loadingIndicator.style.display = "block";
+        
         try {
-          const res = await fetch(scriptURL, { method: "POST", body: formData });
-          if (res.ok) {
-            mainContent.style.display = "none";
-            endPage.style.display = "block";
+          // قراءة البيانات من النموذج
+          const formData = new FormData(form);
+          
+          // معالجة ملف السيرة الذاتية
+          const fileInput = document.getElementById('cv');
+          if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            
+            // تحويل الملف إلى base64
+            const fileReader = new FileReader();
+            
+            // استخدام وعد (Promise) للانتظار حتى يتم قراءة الملف
+            const fileContents = await new Promise((resolve, reject) => {
+              fileReader.onload = e => resolve(e.target.result);
+              fileReader.onerror = e => reject(e);
+              fileReader.readAsDataURL(file);
+            });
+            
+            // إنشاء كائن بيانات ليتم إرساله كـ JSON
+            const jsonData = {
+              name: formData.get('name'),
+              email: formData.get('email'),
+              phone: formData.get('phone'),
+              gender: formData.get('gender'),
+              nationality: formData.get('nationality'),
+              riyadh: formData.get('riyadh'),
+              degree: formData.get('degree'),
+              fnb: formData.get('fnb'),
+              poultry: formData.get('poultry'),
+              linkedin: formData.get('linkedin'),
+              cv: fileContents,
+              cvFilename: file.name,
+              cvMimeType: file.type
+            };
+            
+            console.log("Sending data to Google Apps Script...");
+            
+            // إرسال البيانات إلى تطبيق الويب
+            const response = await fetch(scriptURL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(jsonData),
+            });
+            
+            console.log("Response received:", response);
+            
+            if (response.ok) {
+              // إظهار صفحة النجاح
+              mainContent.style.display = "none";
+              endPage.style.display = "block";
+            } else {
+              // إظهار رسالة خطأ
+              const errorData = await response.json();
+              alert(`❌ Error: ${errorData.message || "Something went wrong. Please try again."}`);
+              
+              // إعادة تمكين زر الإرسال وإخفاء مؤشر التحميل
+              submitButton.disabled = false;
+              loadingIndicator.style.display = "none";
+            }
           } else {
-            alert("❌ Error submitting form, please try again.");
+            alert("Please select a CV file");
+            submitButton.disabled = false;
+            loadingIndicator.style.display = "none";
           }
         } catch (err) {
-          alert("⚠️ Connection issue, please retry.");
+          console.error("Error:", err);
+          alert("⚠️ Connection issue or error processing the file. Please try again.");
+          
+          // إعادة تمكين زر الإرسال وإخفاء مؤشر التحميل
+          submitButton.disabled = false;
+          loadingIndicator.style.display = "none";
         }
       });
     </script>
