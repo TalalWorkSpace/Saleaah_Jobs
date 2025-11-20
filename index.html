@@ -2,30 +2,25 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Saleaah | Sales Specialist</title>
+    <title>Saleaah | Careers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap");
-
       :root {
         --main-purple: #745ff2;
         --text-dark: #222;
       }
-
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
-
       body {
         font-family: "Cairo", sans-serif;
         background-color: #fff;
-        color: var(--text-dark);
         overflow-x: hidden;
       }
-
-      /* خلفية pattern خفيفة */
+      /* الخلفية البنفسجية pattern كما كانت بالضبط */
       body::before {
         content: "";
         position: fixed;
@@ -39,99 +34,64 @@
         opacity: 0.08;
         z-index: -1;
       }
-
       .content {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: left;
-        max-width: 900px;
-        margin: 80px auto;
-        background: #fff;
-        padding: 50px 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        padding: 60px 20px;
+        max-width: 800px;
+        margin: 0 auto;
       }
-
       .logo {
-        width: 220px;
-        margin-bottom: 30px;
+        width: 260px;
+        margin-bottom: 20px;
       }
-
       h1 {
         color: var(--main-purple);
         text-align: center;
-        margin-bottom: 30px;
-        font-size: 2rem;
+        margin-bottom: 25px;
       }
-
       h2 {
         color: var(--main-purple);
-        margin-top: 35px;
-        margin-bottom: 10px;
-        font-size: 1.3rem;
-      }
-
-      ul {
-        margin: 0 0 25px 25px;
-      }
-
-      li {
+        margin-top: 25px;
         margin-bottom: 8px;
       }
-
-      .apply {
-        text-align: center;
-        margin-top: 50px;
+      ul {
+        margin: 0 0 15px 25px;
       }
 
       button {
-        background-color: var(--main-purple);
+        margin-top: 25px;
+        background: var(--main-purple);
         color: #fff;
-        font-weight: 600;
-        padding: 14px 38px;
         border: none;
+        padding: 12px 30px;
         border-radius: 8px;
-        font-size: 1.1rem;
         cursor: pointer;
+        font-weight: bold;
         transition: 0.3s;
-        box-shadow: 0 4px 10px rgba(116, 95, 242, 0.2);
+        font-size: 1rem;
       }
-
       button:hover {
-        background-color: #624cd8;
-        box-shadow: 0 6px 14px rgba(116, 95, 242, 0.3);
+        background: #624cd8;
       }
 
       .footer {
         text-align: center;
-        margin-top: 80px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-        color: #666;
+        padding: 25px 0;
         font-size: 0.9rem;
+        color: #666;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        margin-top: 60px;
       }
-
       .footer span {
         color: var(--main-purple);
-        font-weight: 700;
-      }
-
-      @media (max-width: 600px) {
-        .content {
-          margin: 40px 15px;
-          padding: 25px;
-        }
-        h1 {
-          font-size: 1.7rem;
-        }
-        button {
-          font-size: 1rem;
-          padding: 12px 28px;
-        }
+        font-weight: 600;
       }
     </style>
   </head>
+
   <body>
     <div class="content">
       <img src="logo.png" class="logo" alt="Saleaah logo" />
@@ -161,22 +121,21 @@
         <li>Saudi Nationality – Riyadh-based.</li>
       </ul>
 
-      <div class="apply">
-        <button id="sendBtn">Send your Résumé</button>
-      </div>
-
-      <div class="footer">
-        © 2025 <span>Saleaah</span> — All rights reserved
-      </div>
+      <button id="sendButton">Send your Résumé</button>
     </div>
 
+    <footer class="footer">
+      © 2025 <span>Saleaah</span> — All rights reserved
+    </footer>
+
     <script>
-      // تشغيل زر الإرسال بشكل مضمون على كل الأنظمة
-      document.getElementById("sendBtn").addEventListener("click", function () {
-        const email = "s.alanzi@saleaah.com";
-        const subject = encodeURIComponent("Sales Specialist Application");
+      // يجعل الزر يفتح البريد مباشرة بنفس التنسيق اللي حابينه
+      const mailButton = document.getElementById('sendButton');
+      mailButton.addEventListener('click', () => {
+        const email = 's.alanzi@saleaah.com';
+        const subject = encodeURIComponent('Sales Specialist Application');
         const body = encodeURIComponent(
-          "Dear Saleaah Team,\n\nI'm interested in applying for the Sales Specialist position.\n\nPlease find my résumé attached.\n\nBest regards,\n"
+          'Dear Saleaah Team,%0D%0A%0D%0AI am interested in applying for the Sales Specialist role.%0D%0A%0D%0APlease find my résumé attached.%0D%0A%0D%0ABest regards,%0D%0A'
         );
         window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
       });
