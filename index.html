@@ -6,26 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap");
-
       :root {
         --main-purple: #745ff2;
         --text-dark: #222;
       }
-
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
-
       body {
         font-family: "Cairo", sans-serif;
         background-color: #fff;
         overflow-x: hidden;
-        color: var(--text-dark);
       }
-
-      /* 🔹 الخلفية البنفسجية الشفافة */
       body::before {
         content: "";
         position: fixed;
@@ -33,13 +27,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url("pattern.png"); /* تأكد مسارها صحيح */
+        background-image: url("pattern.png");
         background-repeat: repeat;
         background-size: 180px;
         opacity: 0.08;
         z-index: -1;
       }
-
       .content {
         display: flex;
         flex-direction: column;
@@ -49,28 +42,23 @@
         max-width: 800px;
         margin: 0 auto;
       }
-
       .logo {
         width: 260px;
         margin-bottom: 20px;
       }
-
       h1 {
         color: var(--main-purple);
         text-align: center;
         margin-bottom: 25px;
       }
-
       h2 {
         color: var(--main-purple);
         margin-top: 25px;
         margin-bottom: 8px;
       }
-
       ul {
         margin: 0 0 15px 25px;
       }
-
       button {
         margin-top: 30px;
         background: var(--main-purple);
@@ -84,12 +72,9 @@
         transition: 0.3s;
         box-shadow: 0 4px 12px rgba(116, 95, 242, 0.3);
       }
-
       button:hover {
         background: #624cd8;
-        box-shadow: 0 6px 14px rgba(116, 95, 242, 0.4);
       }
-
       .footer {
         text-align: center;
         padding: 25px 0;
@@ -98,7 +83,6 @@
         border-top: 1px solid rgba(0, 0, 0, 0.05);
         margin-top: 60px;
       }
-
       .footer span {
         color: var(--main-purple);
         font-weight: 600;
@@ -114,25 +98,25 @@
 
       <h2>Key Responsibilities:</h2>
       <ul>
-        <li>Building strong relationships with our current clients.</li>
-        <li>Strategically expanding our clients' network by identifying new opportunities.</li>
-        <li>Leading the expansion into new clients aligned with Saleaah's vision.</li>
+        <li>Building and nurturing strong relationships with our current clients.</li>
+        <li>Strategically expanding our clients’ network by identifying and securing the best deals.</li>
+        <li>Leading the expansion into new clients aligned with Saleaah’s vision.</li>
         <li>Coordinating the entire order cycle with clients.</li>
-        <li>Collaborating closely with the procurement team for smooth operations.</li>
+        <li>Collaborating closely with the procurement team to ensure smooth operations.</li>
         <li>Leading negotiations on prices and other critical terms with clients.</li>
       </ul>
 
       <h2>Requirements:</h2>
       <ul>
-        <li>Bachelor's degree in Marketing, Business Administration, or a related field.</li>
+        <li>Bachelor’s degree in Marketing, Business Administration, or a related field.</li>
         <li>1–3 years of experience in customer relations or sales.</li>
-        <li>Strong analytical and problem-solving skills.</li>
+        <li>Strong analytical and problem‑solving skills, data‑driven decision‑making.</li>
         <li>Excellent communication and interpersonal skills.</li>
-        <li>Exceptional organizational attention.</li>
+        <li>Exceptional organizational skills and meticulous attention.</li>
         <li>Experience in the Poultry Industry.</li>
         <li>Proficiency in MS Excel.</li>
         <li>Fluency in Arabic and English.</li>
-        <li>Saudi Nationality – Riyadh-based.</li>
+        <li>Saudi Nationality – Riyadh‑based.</li>
       </ul>
 
       <button id="sendResume">Send your Résumé</button>
@@ -143,20 +127,24 @@
     </footer>
 
     <script>
-      // ⚙️ وظيفة الزر mailto
-      document.getElementById("sendResume").addEventListener("click", function (e) {
+      document.getElementById("sendResume").addEventListener("click", () => {
         const email = "s.alanzi@saleaah.com";
         const subject = "Sales Specialist Application";
         const body =
           "Dear Saleaah Team,%0D%0A%0D%0AI am interested in applying for the Sales Specialist position.%0D%0A%0D%0APlease find my résumé attached.%0D%0A%0D%0ABest regards,%0D%0A";
-        const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
 
-        // محاولة فتح البريد في نافذة جديدة
-        window.location.href = mailtoLink;
-        // دعم للأنظمة التي تمنع redirect المباشر
+        const mailto = `mailto:${email}?subject=${subject}&body=${body}`;
+
+        // محاولة فتح البريد الافتراضي
+        window.location.href = mailto;
+
+        // إذا النظام لا يدعم mailto (مثل Chrome بلا بريد افتراضي) افتح Gmail
         setTimeout(() => {
-          window.open(mailtoLink);
-        }, 500);
+          window.open(
+            `https://mail.google.com/mail/?view=cm&to=${email}&su=${subject}&body=${body}`,
+            "_blank"
+          );
+        }, 800);
       });
     </script>
   </body>
