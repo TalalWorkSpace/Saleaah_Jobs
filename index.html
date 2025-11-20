@@ -20,7 +20,6 @@
         background-color: #fff;
         overflow-x: hidden;
       }
-      /* الخلفية البنفسجية pattern كما كانت بالضبط */
       body::before {
         content: "";
         position: fixed;
@@ -60,23 +59,36 @@
       ul {
         margin: 0 0 15px 25px;
       }
-
-      button {
+      form {
+        width: 100%;
         margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      label {
+        font-weight: 600;
+      }
+      input,
+      select {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-family: "Cairo", sans-serif;
+      }
+      button {
+        margin-top: 15px;
         background: var(--main-purple);
         color: #fff;
         border: none;
-        padding: 12px 30px;
+        padding: 10px 20px;
         border-radius: 8px;
         cursor: pointer;
         font-weight: bold;
-        transition: 0.3s;
-        font-size: 1rem;
       }
       button:hover {
         background: #624cd8;
       }
-
       .footer {
         text-align: center;
         padding: 25px 0;
@@ -89,30 +101,79 @@
         color: var(--main-purple);
         font-weight: 600;
       }
+      .endpage {
+        text-align: center;
+        padding: 100px 20px;
+        display: none;
+      }
+      .endpage h2 {
+        color: var(--main-purple);
+        margin-bottom: 10px;
+      }
+      .endpage p {
+        color: #333;
+        font-size: 1.1rem;
+      }
+      .loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--main-purple);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto 10px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
   </head>
 
   <body>
-    <div class="content">
+    <div class="content" id="mainContent">
       <img src="logo.png" class="logo" alt="Saleaah logo" />
 
-      <h1>Sales Specialist</h1>
+      <h1 id="jobTitle">Sales Specialist</h1>
 
       <h2>Key Responsibilities:</h2>
       <ul>
-        <li>Building and nurturing strong relationships with our current clients.</li>
-        <li>Strategically expanding our clients' network by identifying and securing the best deals.</li>
-        <li>Leading the expansion into new clients aligned with Saleaah's vision.</li>
+        <li>
+          Building and nurturing strong relationships with our current clients.
+        </li>
+        <li>
+          Strategically expanding our clients' network by identifying and
+          securing the best deals.
+        </li>
+        <li>
+          Leading the expansion into new clients aligned with Saleaah's vision.
+        </li>
         <li>Coordinating the entire order cycle with clients.</li>
-        <li>Collaborating closely with the procurement team to ensure smooth operations.</li>
-        <li>Leading negotiations on prices and other critical terms with clients.</li>
+        <li>
+          Collaborating closely with the procurement team to ensure smooth
+          operations.
+        </li>
+        <li>
+          Leading negotiations on prices and other critical terms with clients.
+        </li>
       </ul>
 
       <h2>Requirements:</h2>
       <ul>
-        <li>Bachelor's degree in Marketing, Business Administration, or a related field.</li>
+        <li>
+          Bachelor's degree in Marketing, Business Administration, or a related
+          field.
+        </li>
         <li>1–3 years of experience in customer relations or sales.</li>
-        <li>Strong analytical and problem-solving skills, data-driven decision-making.</li>
+        <li>
+          Strong analytical and problem-solving skills, data-driven
+          decision-making.
+        </li>
         <li>Excellent communication and interpersonal skills.</li>
         <li>Exceptional organizational skills and meticulous attention.</li>
         <li>Experience in the Poultry Industry.</li>
@@ -121,7 +182,83 @@
         <li>Saudi Nationality – Riyadh-based.</li>
       </ul>
 
-      <button id="sendButton">Send your Résumé</button>
+      <form id="jobForm" action="https://docs.google.com/forms/d/e/1FAIpQLScpU2HlXIR1oGiWj49zS5aX_OKmK6AwIxBB96q7UwX4B1RG8g/formResponse" method="POST" target="hidden-iframe">
+        <!-- تغيير الحقول لتناسب نموذج Google Forms -->
+        <label>Name</label>
+        <input type="text" id="name" name="entry.1638866751" required />
+
+        <label>Email</label>
+        <input type="email" id="email" name="entry.429305325" required />
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone" name="entry.2043089891" required pattern="[0-9]{9,}" />
+
+        <label>Gender</label>
+        <select id="gender" name="entry.1565770601" required>
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+
+        <label>Nationality</label>
+        <select id="nationality" name="entry.1291775422" required>
+          <option value="">Select</option>
+          <option value="Saudi">Saudi</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <label>Are you based in Riyadh?</label>
+        <select id="riyadh" name="entry.1747741062" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Do you have a bachelor's degree?</label>
+        <select id="degree" name="entry.429873741" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Have you worked in the Food & Beverage industry?</label>
+        <select id="fnb" name="entry.2000312391" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Have you worked in the Poultry industry?</label>
+        <select id="poultry" name="entry.1376892882" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>LinkedIn Profile</label>
+        <input type="url" id="linkedin" name="entry.1271985669" required />
+
+        <label>Upload your CV (PDF/DOC)</label>
+        <input
+          type="file"
+          id="cv"
+          accept=".pdf,.doc,.docx"
+          required
+        />
+
+        <button type="submit" id="submitButton">Submit Application</button>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p>Submitting your application...</p>
+        </div>
+      </form>
+      <iframe name="hidden-iframe" style="display:none;"></iframe>
+    </div>
+
+    <div class="endpage" id="endPage">
+      <h2>Your application has been submitted ✓</h2>
+      <p>Thank you for applying. Our team will review your profile and contact you if there is a match.</p>
     </div>
 
     <footer class="footer">
@@ -129,15 +266,67 @@
     </footer>
 
     <script>
-      // يجعل الزر يفتح البريد مباشرة بنفس التنسيق اللي حابينه
-      const mailButton = document.getElementById('sendButton');
-      mailButton.addEventListener('click', () => {
-        const email = 's.alanzi@saleaah.com';
-        const subject = encodeURIComponent('Sales Specialist Application');
-        const body = encodeURIComponent(
-          'Dear Saleaah Team,%0D%0A%0D%0AI am interested in applying for the Sales Specialist role.%0D%0A%0D%0APlease find my résumé attached.%0D%0A%0D%0ABest regards,%0D%0A'
-        );
-        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      const form = document.getElementById("jobForm");
+      const mainContent = document.getElementById("mainContent");
+      const endPage = document.getElementById("endPage");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const submitButton = document.getElementById("submitButton");
+      
+      // مستودع Google Drive API
+      const driveAPI = "https://script.google.com/macros/s/AKfycbxXAKhfJvTlpQxF4S5uZVE4rJVsJYpzuwDqbF-PQ3I3BqGmg3XQfnFTDa14wdYwUvOX/exec";
+      
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        // إظهار مؤشر التحميل وتعطيل زر الإرسال
+        submitButton.disabled = true;
+        loadingIndicator.style.display = "block";
+        
+        try {
+          // التحقق من وجود ملف
+          const fileInput = document.getElementById('cv');
+          if (!fileInput.files || fileInput.files.length === 0) {
+            throw new Error("Please select a CV file");
+          }
+          
+          // إنشاء FormData للبيانات الرئيسية
+          const formData = new FormData(form);
+          
+          // معالجة الملف - أرسل الملف إلى Google Drive API
+          const file = fileInput.files[0];
+          const fileFormData = new FormData();
+          fileFormData.append('file', file);
+          fileFormData.append('filename', file.name);
+          fileFormData.append('email', document.getElementById('email').value);
+          
+          // رفع الملف
+          const fileUploadResponse = await fetch(driveAPI, {
+            method: 'POST',
+            body: fileFormData
+          });
+          
+          if (!fileUploadResponse.ok) {
+            throw new Error("Error uploading CV file");
+          }
+          
+          const fileData = await fileUploadResponse.json();
+          
+          // إرسال النموذج الأساسي
+          form.submit();
+          
+          // عرض صفحة النجاح بعد فترة قصيرة
+          setTimeout(() => {
+            mainContent.style.display = "none";
+            endPage.style.display = "block";
+            window.scrollTo(0, 0);
+          }, 1500);
+          
+        } catch (error) {
+          console.error("Error:", error);
+          alert(`Error submitting form: ${error.message}`);
+          submitButton.disabled = false;
+          loadingIndicator.style.display = "none";
+        }
       });
     </script>
   </body>
