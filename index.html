@@ -247,12 +247,12 @@
         />
 
         <button type="submit" id="submitButton">Submit Application</button>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p>Submitting your application...</p>
+        </div>
       </form>
-      
-      <div class="loading" id="loadingIndicator">
-        <div class="loading-spinner"></div>
-        <p>Submitting your application...</p>
-      </div>
     </div>
 
     <div class="endpage" id="endPage">
@@ -282,79 +282,60 @@
         loadingIndicator.style.display = "block";
         
         try {
-          // قراءة البيانات من النموذج
-          const formData = new FormData(form);
-          
-          // معالجة ملف السيرة الذاتية
+          // التحقق من وجود ملف CV
           const fileInput = document.getElementById('cv');
-          if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            
-            // تحويل الملف إلى base64
-            const fileReader = new FileReader();
-            
-            // استخدام وعد (Promise) للانتظار حتى يتم قراءة الملف
-            const fileContents = await new Promise((resolve, reject) => {
-              fileReader.onload = e => resolve(e.target.result);
-              fileReader.onerror = e => reject(e);
-              fileReader.readAsDataURL(file);
-            });
-            
-            // إنشاء كائن بيانات ليتم إرساله كـ JSON
-            const jsonData = {
-              name: formData.get('name'),
-              email: formData.get('email'),
-              phone: formData.get('phone'),
-              gender: formData.get('gender'),
-              nationality: formData.get('nationality'),
-              riyadh: formData.get('riyadh'),
-              degree: formData.get('degree'),
-              fnb: formData.get('fnb'),
-              poultry: formData.get('poultry'),
-              linkedin: formData.get('linkedin'),
-              cv: fileContents,
-              cvFilename: file.name,
-              cvMimeType: file.type
-            };
-            
-            console.log("Sending data to Google Apps Script...");
-            
-            // إرسال البيانات إلى تطبيق الويب
-            const response = await fetch(scriptURL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(jsonData),
-            });
-            
-            console.log("Response received:", response);
-            
-            if (response.ok) {
-              // إظهار صفحة النجاح
-              mainContent.style.display = "none";
-              endPage.style.display = "block";
-            } else {
-              // إظهار رسالة خطأ
-              const errorData = await response.json();
-              alert(`❌ Error: ${errorData.message || "Something went wrong. Please try again."}`);
-              
-              // إعادة تمكين زر الإرسال وإخفاء مؤشر التحميل
-              submitButton.disabled = false;
-              loadingIndicator.style.display = "none";
-            }
-          } else {
-            alert("Please select a CV file");
-            submitButton.disabled = false;
-            loadingIndicator.style.display = "none";
+          if (!fileInput.files || fileInput.files.length === 0) {
+            throw new Error("Please select a CV file");
           }
-        } catch (err) {
-          console.error("Error:", err);
-          alert("⚠️ Connection issue or error processing the file. Please try again.");
+          
+          // إعداد بيانات النموذج
+          const formData = new FormData();
+          
+          // إضافة جميع حقول النموذج النصية
+          formData.append('name', document.getElementById('name').value);
+          formData.append('email', document.getElementById('email').value);
+          formData.append('phone', document.getElementById('phone').value);
+          formData.append('gender', document.getElementById('gender').value);
+          formData.append('nationality', document.getElementById('nationality').value);
+          formData.append('riyadh', document.getElementById('riyadh').value);
+          formData.append('degree', document.getElementById('degree').value);
+          formData.append('fnb', document.getElementById('fnb').value);
+          formData.append('poultry', document.getElementById('poultry').value);
+          formData.append('linkedin', document.getElementById('linkedin').value);
+          
+          // إضافة ملف السيرة الذاتية
+          formData.append('cv', fileInput.files[0]);
+          
+          console.log("Sending form data...");
+          
+          // تعديل طريقة الإرسال لتكون أكثر تبسيطًا (استخدام fetch مع FormData مباشرة)
+          const response = await fetch(scriptURL, {
+            method: 'POST',
+            body: formData
+          });
+          
+          console.log("Response received:", response);
+          
+          if (response.ok) {
+            console.log("Form submitted successfully!");
+            // إخفاء النموذج وإظهار صفحة النجاح
+            mainContent.style.display = "none";
+            endPage.style.display = "block";
+            window.scrollTo(0, 0);
+          } else {
+            const errorText = await response.text();
+            throw new Error(`Server error: ${errorText}`);
+          }
+          
+        } catch (error) {
+          console.error("Error:", error);
           
           // إعادة تمكين زر الإرسال وإخفاء مؤشر التحميل
           submitButton.disabled = false;
           loadingIndicator.style.display = "none";
+          
+          // عرض رسالة الخطأ للمستخدم
+          alert(`Error submitting form: ${error.message || "Unknown error occurred"}`);
         }
       });
     </script>
